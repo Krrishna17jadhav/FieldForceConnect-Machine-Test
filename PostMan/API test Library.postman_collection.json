@@ -1,0 +1,146 @@
+{
+  "info": {
+    "_postman_id": "3db10cf8-a7df-4a3d-a1d5-0ea8764e4012",
+    "name": "API test Library",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47674393",
+    "_collection_link": "https://go.postman.co/collection/47674393-3db10cf8-a7df-4a3d-a1d5-0ea8764e4012?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET URL",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseURL}}",
+          "host": [
+            "{{BaseURL}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login Valid",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Login successful\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.success).to.eql(true);\r\n});\r\n\r\npm.test(\"User ID is present\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.userId).to.exist;\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"abc@123gmail.com\",\r\n  \"password\": \"Dnyanesh@123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/api/account/authenticate",
+          "host": [
+            "{{BaseURL}}"
+          ],
+          "path": [
+            "api",
+            "account",
+            "authenticate"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Invalid login should fail\", function () {\r\n    pm.expect(pm.response.json().success).to.eql(false);\r\n});"
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Login should fail\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.success).to.eql(false);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"Test@123gmail.com\",\r\n  \"password\": \"Govinda@123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseURL}}/api/account/authenticate",
+          "host": [
+            "{{BaseURL}}"
+          ],
+          "path": [
+            "api",
+            "account",
+            "authenticate"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add custmoer",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "BaseURL",
+      "value": ""
+    },
+    {
+      "key": "email",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}
